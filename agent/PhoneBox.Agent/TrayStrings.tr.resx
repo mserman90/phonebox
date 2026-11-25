@@ -28,21 +28,21 @@
         <value>Windows ile başlat</value>
     </data>
     <data xml:space="preserve" name="quit">
-        <value>Çık</value>
+        <value>Çıkış</value>
     </data>
     <data xml:space="preserve" name="connected">
-        <value>Telefon bağlandı ({0})</value>
+        <value>Cihaz bağlandı ({0})</value>
     </data>
     <data xml:space="preserve" name="disconnected">
-        <value>Telefon bağlanmadı</value>
+        <value>Bağlı cihaz yok</value>
     </data>
     <data xml:space="preserve" name="tooltipConnected">
-        <value>PhoneBox — telefon bağlandı</value>
+        <value>PhoneBox — cihaz bağlandı</value>
     </data>
     <data xml:space="preserve" name="tooltipWaiting">
-        <value>PhoneBox — telefon bekle</value>
+        <value>PhoneBox — cihaz bekleniyor</value>
     </data>
     <data xml:space="preserve" name="autostartError">
-        <value>Başlatma kısayolunu değiştirilemedi: {0}</value>
+        <value>Başlangıç kısayolu değiştirilemedi: {0}</value>
     </data>
 </root>

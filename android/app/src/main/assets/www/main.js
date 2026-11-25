@@ -978,7 +978,7 @@ export function prRow(p, mine) {
   }
   row.append(h('span', 'rp', `${p.repo.split('/')[1]}#${p.number}`), h('span', 'tt', p.title));
   if (mine && (p.review === 'APPROVED' || p.review === 'CHANGES_REQUESTED'))
-    row.appendChild(h('span', 'rv ' + p.review, p.review === 'APPROVED' ? 'approved' : 'changes'));
+    row.appendChild(h('span', 'rv ' + p.review, p.review === 'APPROVED' ? tp('approved') : tp('changes')));
   return row;
 }
 
@@ -1251,7 +1251,7 @@ export function renderApproval() {
   $('apChoices').hidden = options.length === 0;
   $('apCustom').hidden = !(asking && a.custom);
   if (asking && a.custom) $('apCustomText').placeholder = t('panel.answerCustom');
-  const source = a.source || 'AI agent';
+  const source = a.source || tp('AI agent');
   const sourceKind = /opencode/i.test(source) ? 'opencode' : /codex/i.test(source) ? 'codex' : /claude/i.test(source) ? 'claude' : 'agent';
   // the card wears the agent's own glyph: OpenCode's diamond (as on the sessions widget), Codex's circle, Claude's asterisk
   $('apLogo').textContent = sourceKind === 'opencode' ? '◈' : sourceKind === 'codex' ? '◎' : sourceKind === 'claude' ? '✳' : '◆';

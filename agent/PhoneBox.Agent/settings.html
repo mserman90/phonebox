@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PhoneBox Settings</title>
+<title>PhoneBox Ayarları</title>
 <link rel="icon" href="/favicon.ico">
 <style>
 :root {
@@ -474,7 +474,7 @@ nav a.on::before { color: var(--accent); }
   <span class="pill" id="phone"><i></i><span data-i18n="s.phoneStatus">Phone…</span></span>
   <button class="btn sm upd-top" id="updTop" hidden></button>
   <div class="spacer"></div>
-  <select id="langSel" data-i18n-title="lang.label" title="Language" aria-label="Language" style="padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);font-size:12.5px;max-width:160px"></select>
+  <select id="langSel" data-i18n-title="lang.label" title="Dil" aria-label="Dil" style="padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);font-size:12.5px;max-width:160px"></select>
   <span class="dirty" role="status" data-i18n-title="s.unsavedChanges" title="Unsaved changes"><i class="dirty-dot"></i><span data-i18n="s.unsavedChanges">Unsaved changes</span></span>
   <button class="btn primary" id="restartBtn" hidden title="Wi-Fi settings change after a restart" data-i18n="s.restartApply" data-i18n-title="s.restartApplyTitle">Restart to apply</button>
   <button class="btn" id="openPhone" data-i18n="s.openOnPhone">Open on phone</button>
@@ -2269,15 +2269,15 @@ async function importPages() {
     const list = risky.flatMap((w) => w.type === 'command'
       ? [cut('Command (Windows)', w.options.command), cut('Command (Linux / macOS)', w.options.commandUnix)].filter(Boolean)
       : [`• Custom HTML (${String(w.options.html).length} characters)`]).join('\n');
-    const keep = confirm(`This file contains ${risky.length} widget(s) that run code on this computer:\n\n${list}\n\nOK = import them as they are (only if you trust the file)\nCancel = import them empty`);
+    const keep = confirm(`Bu dosya bu bilgisayarda kod çalıştıran ${risky.length} widget içeriyor:\n\n${list}\n\nTamam = Olduğu gibi içe aktar (yalnızca dosyaya güveniyorsanız)\nİptal = Boş olarak içe aktar`);
     if (!keep) for (const w of risky) { w.options = { ...w.options }; delete w.options.command; delete w.options.commandUnix; if (w.type === 'html') w.options.html = ''; }
   }
-  const replace = cfg.pages.length && confirm(`Import ${clean.length} page(s).\n\nOK = replace all ${cfg.pages.length} current pages\nCancel = add them after the current pages`);
+  const replace = cfg.pages.length && confirm(`${clean.length} sayfayı içe aktar.\n\nTamam = Mevcut ${cfg.pages.length} sayfanın tümünü değiştir\nİptal = Mevcut sayfaların ardına ekle`);
   if (replace) cfg.pages = clean; else cfg.pages.push(...clean);
   selPage = replace ? 0 : cfg.pages.length - clean.length;
   selWidget = -1;
   renderPages(); changed();
-  toast(`Imported ${clean.length} page(s)` + (dropped ? ` (${dropped} unknown widget(s) left out)` : '') + ' — remember to save');
+  toast(`${clean.length} sayfa içe aktarıldı` + (dropped ? ` (${dropped} bilinmeyen widget hariç tutuldu)` : '') + ' — kaydetmeyi unutmayın');
 }
 $('downloadJson').onclick = () => download('phonebox-settings', cfg);
 $('uploadJson').onclick = async () => {
@@ -3145,7 +3145,7 @@ function renderControlSettings() {
   const btn = (text, fn) => h('button',{class:'btn',type:'button',onclick:async e=>{
     const b=e.currentTarget;b.disabled=true;try{await fn();}catch(error){toast(error.message,true);}finally{b.disabled=false;}
   }},text);
-  root.replaceChildren(h('h3',{},'Control Deck'),h('p',{class:'hint'},t('s.cd.lead')));
+  root.replaceChildren(h('h3',{},tc('Control Deck')),h('p',{class:'hint'},t('s.cd.lead')));
   root.append(field(t('s.cd.audio'),c,'allowListening','checkbox'),field(t('s.cd.power'),c,'allowPower','checkbox'),field(t('s.cd.radioLogos'),c,'allowOnlineRadioLogos','checkbox'));
   const spotify=h('details',{},h('summary',{},t('s.cd.spotifyConn')));
   const auth=h('p',{class:'hint'},t('s.cd.spotifyAuthHint'));
@@ -3319,9 +3319,9 @@ function renderControlSettings() {
             h('option', { value: '' }, t('s.cd.selectCountry')),
             ...list.map((cty) => h('option', { value: cty.code }, `${cty.name} (${cty.stationCount})`))
           );
-          dirStatus.textContent = `Loaded ${list.length} countries.`;
+          dirStatus.textContent = `${list.length} ülke yüklendi.`;
         } catch (e) {
-          dirStatus.textContent = e.message || 'Could not load countries from radio-browser.info.';
+          dirStatus.textContent = e.message || 'Ülkeler radio-browser.info üzerinden yüklenemedi.';
           throw e;
         }
       }),
@@ -3333,8 +3333,8 @@ function renderControlSettings() {
         const MAX_ACTIONS = 512;
         c.actions ||= [];
         if (c.actions.length >= MAX_ACTIONS) {
-          dirStatus.textContent = `Control Deck is full (${MAX_ACTIONS} controls maximum). Remove unused controls before importing.`;
-          toast(`Control Deck is full (${MAX_ACTIONS} max)`, true);
+          dirStatus.textContent = `Kontrol Paneli dolu (en fazla ${MAX_ACTIONS} kontrol). İçe aktarmadan önce kullanılmayan kontrolleri kaldırın.`;
+          toast(`Kontrol Paneli dolu (en fazla ${MAX_ACTIONS})`, true);
           return;
         }
         const limit = Math.max(1, Math.min(100, parseInt(limitInput.value || '30', 10)));
@@ -3365,14 +3365,14 @@ function renderControlSettings() {
             added++;
           }
           if (added > 0) { changed(); renderActions(); }
-          const msg = `Imported ${added} new station(s)`
-            + (skipped ? ` (${skipped} already present)` : '')
-            + (capped ? ` — stopped at ${MAX_ACTIONS}-control limit (${capped} omitted)` : '')
-            + '. Click Save to apply.';
+          const msg = `${added} yeni radyo istasyonu içe aktarıldı`
+            + (skipped ? ` (${skipped} zaten listede var)` : '')
+            + (capped ? ` — ${MAX_ACTIONS} kontrol sınırına ulaşıldı (${capped} atlandı)` : '')
+            + '. Uygulamak için Kaydet\'e tıklayın.';
           dirStatus.textContent = msg;
-          toast(capped ? `Imported ${added} stations (${MAX_ACTIONS} limit reached)` : `Imported ${added} station(s)`);
+          toast(capped ? `${added} istasyon içe aktarıldı (${MAX_ACTIONS} sınırına ulaşıldı)` : `${added} radyo istasyonu içe aktarıldı`);
         } catch (e) {
-          dirStatus.textContent = e.message || 'Could not import stations from radio-browser.info.';
+          dirStatus.textContent = e.message || 'İstasyonlar radio-browser.info üzerinden içe aktarılamadı.';
           throw e;
         }
       }),
@@ -3406,7 +3406,7 @@ function renderControlSettings() {
     const box=h('details',{},h('summary',{},p.label || p.id));
     box.append(field(t('s.cd.profileId'),p,'id'),field(t('s.cd.profileLabel'),p,'label'),field(t('s.cd.overrideOutput'),p,'output'),field(t('s.cd.overrideInput'),p,'input'));
     const levels=h('details',{},h('summary',{},t('s.cd.capturedLevelsTitle')));
-    for(const level of p.levels || []) levels.append(h('p',{class:'hint'},level.kind+': '+level.id),field('Volume',level,'volume','number'),field('Muted',level,'muted','checkbox'));
+    for(const level of p.levels || []) levels.append(h('p',{class:'hint'},level.kind+': '+level.id),field(tc('Volume'),level,'volume','number'),field(tc('Muted'),level,'muted','checkbox'));
     box.append(levels);
     const list=h('textarea',{'aria-label':'Profile action IDs',rows:3},(p.actions || []).join('\n'));
     const syncActions=()=>{p.actions=list.value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);changed();};
@@ -3475,7 +3475,7 @@ function appearanceEditor(owner, parents, label, widget = false) {
           h('option', { value: 'true', selected: value === true }, on), h('option', { value: 'false', selected: value === false }, off))));
     }
     root.replaceChildren(h('summary', {}, label), h('p', { class: 'hint' }, widget
-      ? 'Overrides the page and global appearance. Inherit restores the preset or parent value.'
+      ? t('s.ap.widgetHint')
       : tl('Choose a preset, then adjust individual values. Safe areas and page navigation remain reserved.')), ...fields,
       h('button', { type: 'button', class: 'btn sm', onclick: () => { delete owner.appearance; update(); render(); } }, t('s.appearance.reset')));
   };
@@ -3541,6 +3541,7 @@ function applyLanguageUi(langPref) {
   I18n.populateSelect($('displayLangSel'), true);
   if ($('langSel')) $('langSel').value = I18n.getPref();
   if ($('displayLangSel')) $('displayLangSel').value = I18n.getPref();
+  document.title = t('s.settingsTitle') || 'PhoneBox Ayarları';
   I18n.applyDom();
   updateStageText();
   $('chargeRangeAnd').textContent = tc('and');

@@ -970,7 +970,7 @@
     },
 
     tr: {
-      'lang.auto': 'Sistem dilini izle',
+      'lang.auto': 'Sistem dilini kullan',
       'lang.label': 'Dil',
 
       'panel.allPages': 'Tüm sayfalar',
@@ -985,7 +985,7 @@
       'panel.pageSwitch': 'Sayfa geçişi',
       'panel.switchingTo': '{target} sayfasına geçiliyor',
       'panel.backTo': '{target} sayfasına dönülüyor',
-      'panel.moreWaiting': '{n} kişi daha bekliyor',
+      'panel.moreWaiting': '{n} öğe daha bekliyor',
       'panel.pagePause': 'Sayfa geçişini duraklat',
       'panel.pagePaused': 'Sayfa geçişi duraklatıldı (devam için dokunun)',
       'panel.pagePausedWait': 'sayfa duraklatıldı',
@@ -1018,7 +1018,7 @@
       'panel.couldNotEnd': 'Sonlandırılamadı',
       'panel.endedGroup': '{killed} × {title} sonlandırıldı',
       'panel.failedCount': ' ({n} başarısız)',
-      'panel.couldNotEndThem': 'Sonlandırılamadılar',
+      'panel.couldNotEndThem': 'Sonlandırılamadı',
       'panel.pcUnreachable': 'Bilgisayara ulaşılamıyor',
 
       'panel.allow': 'İzin ver',
@@ -1309,7 +1309,7 @@
       's.pages.layout': 'Düzen',
       's.pages.livePreview': 'Canlı önizleme',
       's.shortcuts.lead': 'Kısayol ızgarası ve Büyük düğme widget\'larının gösterdiği tuşlar. Düzenlemek için tıklayın, sıralamak için sürükleyin. Telefon yalnızca tuş kimliğini gönderir; komutlar bu bilgisayardan dışarı çıkmaz.',
-      's.rules.lead': 'Panelin bu bilgisayarda olanlara tepki vermesini sağlayın: Claude sizi beklediğinde AI sayfasını, müzik çaldığında müzik sayfasını veya arama sırasında "yayında" işaretini gösterin.',
+      's.rules.lead': 'Panelin bu bilgisayarda olanlara tepki vermesini sağlayın: Claude sizi beklediğinde Yapay Zekâ sayfasını, müzik çaldığında müzik sayfasını veya arama sırasında "Canlı Yayında" işaretini gösterin.',
       's.rules.add': 'Kural ekle',
       's.rules.pause1h': 'Tüm kuralları 1 saat duraklat',
       's.general.lead': 'Hava durumu, gece modu, ekran davranışı ve telefon bağlantısı.',
@@ -12046,8 +12046,8 @@
   }
   delete window.PhoneBoxLocaleData;
 
-  let pref = 'auto';
-  let active = 'en';
+  let pref = 'tr';
+  let active = 'tr';
 
   try {
     const saved = localStorage.getItem('pb-lang');
@@ -12075,7 +12075,7 @@
       const match = BY_CODE_LOWER.get(base);
       if (match) return match;
     }
-    return 'en';
+    return 'tr';
   }
 
   function applyLanguageAttributes() {
